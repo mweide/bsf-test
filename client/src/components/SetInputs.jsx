@@ -10,24 +10,16 @@ const SetInputs = () => {
 
     if(searchType === "codesByEvent"){
 
-        return <div>
-            <EventSelector />
-        </div>
+        return (<div><EventSelector /></div>)
     }
     if(searchType === "peopleByCodes"){
-        return <div>
-            <PeopleInput />
-        </div>
+        return (<div><PeopleInput /></div>)
     }
     if(searchType === "codesByPeople"){
-        return <div>
-            <CodeInput />
-        </div>
+        return (<div><CodeInput /></div>)
     }
     if(searchType === "peopleByEvents"){
-        return <div>
-            <EventSelector />
-        </div>
+        return (<div><EventSelector /></div>)
     }
     
 }

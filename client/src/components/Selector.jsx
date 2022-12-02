@@ -12,8 +12,7 @@ const Selector = () => {
         {value: "codesByPeople", label: "Codes by People"},
         {value: "peopleByEvents", label: "People by Events"}
     ]
-    const handleChange = e => {
-        //e.preventDefault()
+    const handleChange = (e) => {
         setSelectedValue(e.value)
       }
 
