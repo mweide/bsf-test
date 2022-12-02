@@ -28,6 +28,16 @@ app.get("/api/read", (req, res) => {
     })
 })
 
+app.get("/:info", (req,res) => {
+    if(err){
+        res.send("hi")
+        throw err
+    }
+    const par = JSON.stringify(req.params.info)
+    res.send("hi: " + par)
+})
+
+/*
 app.get("/api/read/codesByEvent/:evt", (req, res) => {
     const evt = req.params[evt]
     const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
@@ -71,7 +81,7 @@ app.get("/api/read/peopleByEvents/:evt", (req, res) => {
         }
         res.send(result);
     })
-})
+})*/
 
 // CREATE
 app.post("/api/create", (req, res) => {
