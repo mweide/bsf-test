@@ -1,5 +1,6 @@
 import React, {createContext, useState} from 'react'
 import Select from 'react-select'
+import SetInputs from './SetInputs'
 
 export const valToExport = createContext()
 
@@ -28,7 +29,7 @@ const Selector = () => {
                 value = {options.find(obj => obj.value === selectedValue)}
                 onChange={handleChange} />
             </form>
-            <valToExport.Provider value={selectedValue}></valToExport.Provider>
+            <SetInputs searchType={selectedValue}/>
         </div>
     )
 }

@@ -17,31 +17,6 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-/**
- * const setSearch = () => {
-    if(searchType === "codesByEvent"){
-        axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByEvent/${event}`).then((response) => {
-            setResults(response.data)})
-        setColumns(["Event Name", "Event Date", "Ticket Code"])
-    }
-    if(searchType === "peopleByCodes"){
-        axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${code}`).then((response) => {
-            setResults(response.data)})
-        setColumns(["First Name", "Last Name", "Email Address", "Ticket Code"])
-    }
-    if(searchType === "codesByPeople"){
-        axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByPeople/fn=${first_name}&ln=${last_name}`).then((response) => {
-            setResults(response.data)})
-        setColumns(["Ticket Code", "First Name", "Last Name"])
-    }
-    if(searchType === "peopleByEvents"){
-        axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByEvents/${event}`).then((response) => {
-            setResults(response.data)})
-        setColumns(["Event Name", "Event Date", "First Name", "Last Name"])
-    }
-}
- */
-
 // READ
 app.get("/api/read", (req, res) => {
     const sqlSelect = "SELECT * FROM volunteers;"
@@ -53,8 +28,8 @@ app.get("/api/read", (req, res) => {
     })
 })
 
-app.get("/api/readcodesByEvent/:event", (req, res) => {
-    const evt = req.params.event
+app.get("/api/read/codesByEvent/:evt", (req, res) => {
+    const evt = req.params[evt]
     const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
     db.query(sqlSelect, [evt], (err, result) => { 
         if(err){
@@ -65,7 +40,7 @@ app.get("/api/readcodesByEvent/:event", (req, res) => {
 })
 
 app.get("/api/read/peopleByCodes/:code", (req, res) => {
-    const code = req.params.code
+    const code = req.params[code]
     const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id WHERE ticketCode=?;"
     db.query(sqlSelect, [code], (err, result) => { 
         if(err){
@@ -76,8 +51,8 @@ app.get("/api/read/peopleByCodes/:code", (req, res) => {
 })
 
 app.get("/api/read/codesByPeople/:fn/:ln", (req, res) => {
-    const first = req.params.fn
-    const last = req.params.ln
+    const first = req.params[fn]
+    const last = req.params[ln]
     const sqlSelect = "SELECT ticketCode, first_name, last_name FROM volunteers JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE first_name=? and last_name=?;"
     db.query(sqlSelect, [first, last], (err, result) => { 
         if(err){
@@ -87,8 +62,8 @@ app.get("/api/read/codesByPeople/:fn/:ln", (req, res) => {
     })
 })
 
-app.get("/api/read/peopleByEvents/:event", (req, res) => {
-    const evt = req.params.event
+app.get("/api/read/peopleByEvents/:evt", (req, res) => {
+    const evt = req.params[evt]
     const sqlSelect = "SELECT event_name, event_date, first_name, last_name FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id WHERE event_name=?;"
     db.query(sqlSelect, [evt], (err, result) => { 
         if(err){

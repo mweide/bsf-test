@@ -1,20 +1,15 @@
 import React from "react"
 import { useState } from "react"
-import { useContext } from "react"
 import Table from './Table'
 import axios from "axios"
-import valToExport from './Selector'
-import { first, last } from "./PeopleInput"
-import { codeContext } from "./CodeInput"
-import { eventSelected } from "./EventSelector"
 
-const Search = () => {
+const Search = (props) => {
 
-    const searchType = useContext(valToExport)
-    const first_name = useContext(first)
-    const last_name = useContext(last)
-    const code = useContext(codeContext)
-    const event = useContext(eventSelected)
+    const searchType = props.searchType
+    const evt = props.selectedEvent
+    const first_name = props.first_name
+    const last_name = props.last_name 
+    const code = props.codeValue
 
     const [results, setResults] = useState([])
     const [columns, setColumns] = useState([])
@@ -22,7 +17,7 @@ const Search = () => {
     
     const setSearch = () => {
         if(searchType === "codesByEvent"){
-            axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByEvent/${event}`).then((response) => {
+            axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByEvent/${evt}`).then((response) => {
                 setResults(response.data)})
             setColumns(["Event Name", "Event Date", "Ticket Code"])
         }
@@ -37,7 +32,7 @@ const Search = () => {
             setColumns(["Ticket Code", "First Name", "Last Name"])
         }
         if(searchType === "peopleByEvents"){
-            axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByEvents/${event}`).then((response) => {
+            axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByEvents/${evt}`).then((response) => {
                 setResults(response.data)})
             setColumns(["Event Name", "Event Date", "First Name", "Last Name"])
         }
