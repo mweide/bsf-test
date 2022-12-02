@@ -1,6 +1,7 @@
 import React from "react"
 import { useState, useRef } from "react"
 import axios from "axios"
+import Table from "./Table"
 
 const CodeInput = (props) => {
 
@@ -10,6 +11,12 @@ const CodeInput = (props) => {
     const searchType = props.searchType
 
     const ref1 = useRef(null)
+
+    const mappedResults = () =>{
+        results.map((val, k) => {
+            return (<div key={k}>
+              <div>{val.first_name}, {val.last_name}, {val.email_address}, {val.ticketCode}</div></div>)})
+    }
 
     function refreshPage() {
         window.location.reload(false);
@@ -22,15 +29,18 @@ const CodeInput = (props) => {
     }
 
     return(
+        <div>
         <div id="code-input">
             <label>
                 <input ref={ref1} name="codeInput" id="codeInput" type="text" onChange={e => setCode(e.target.value)}></input>
             </label>
             <button id="search-button" onClick={() => {
             if (code.length > 0) {
-              search(); refreshPage();
+              search();
             }
           }}>Search</button>
+        </div>
+        <Table columns={columns} data={mappedResults}/>
         </div>
     )
 }

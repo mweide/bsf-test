@@ -2,11 +2,11 @@ import React from "react"
 import { useState } from "react"
 import Select from "react-select"
 import axios from "axios"
+import Table from "./Table"
 
 const EventSelector = (props) => {
     const [selectedEvent, setSelectedEvent] = useState('default')
     const options = [{value:"1", label:"1"},{value:"2", label:"2"},{value:"3", label:"3"},{value:"4", label:"4"}] //create query for events list
-
     const searchType = props.selectedValue
 
     const [results, setResults] = useState([])
@@ -29,6 +29,19 @@ const EventSelector = (props) => {
         }
     }
 
+    const mappedResults = () => {
+        if(searchType === "codesByEvent"){
+            results.map((val, k) => {
+                return (<div key={k}>
+                  <div>{val.event_name}, {val.event_date}, {val.ticketCode}</div></div>)})
+        }
+        if(searchType === "peopleByEvents"){
+            results.map((val, k) => {
+                return (<div key={k}>
+                  <div>{val.event_name}, {val.event_date}, {val.first_name}, {val.last_name}</div></div>)})
+        }
+    }
+
     return(
         <div>
             <form id="event-selector-form">
@@ -42,10 +55,11 @@ const EventSelector = (props) => {
             <div>
             <button id="search-button" onClick={() => {
             if (selectedEvent.length > 0) {
-              search(); refreshPage();
+              search();
             }
           }}>Search</button>
             </div>
+            <Table columns={columns} data={mappedResults}/>
         </div>
     )
 }

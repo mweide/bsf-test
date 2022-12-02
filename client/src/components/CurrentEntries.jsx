@@ -8,12 +8,12 @@ const CurrentEntries = () => {
   const [entryList, setEntryList] = useState([])
 
 
-  // READ (GET)
- // useEffect(() => {
-    //axios.get(`${process.env.REACT_APP_HOST}/api/read`).then((response) => {
-    //  setEntryList(response.data)
-   // })
-  //}, [])
+   //READ (GET)
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_HOST}/api/read`).then((response) => {
+    setEntryList(response.data)
+    })
+}, [])
 
   const [newEmail, setNewEmail] = useState('')
   const [passcode, setPasscode] = useState('')

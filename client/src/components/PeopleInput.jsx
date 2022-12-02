@@ -1,6 +1,7 @@
 import React from "react"
 import { useState, useRef } from "react"
 import axios from "axios"
+import Table from "./Table"
 
 const PeopleInput = () => {
 
@@ -8,6 +9,11 @@ const PeopleInput = () => {
     const [lInput, setLinput] = useState('')
     const [results, setResults] = useState([])
     const [columns, setColumns] = useState([])
+    const mappedResults = () =>{
+        results.map((val, k) => {
+            return (<div key={k}>
+              <div>{val.ticketCode}, {val.first_name}, {val.last_name}</div></div>)})
+    }
 
 
     const search = () => {
@@ -32,10 +38,11 @@ const PeopleInput = () => {
             <div>
                 <button id="search-button" onClick={() => {
             if (fInput.length > 0 && lInput.length > 0) {
-              search(); refreshPage();
+              search();
             }
           }}>Search</button>
             </div>
+            <Table columns={columns} data={mappedResults}/>
         </div>
     )
 }
