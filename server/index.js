@@ -38,6 +38,16 @@ app.get("/api/read/events", (req, res) => {
     })
 })
 
+app.get("/api/read/codesByEvent/", (req, res) => {
+    //const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
+    //db.query(sqlSelect, [evt], (err, result) => { 
+        //if(err){
+          //  throw err;
+        //}
+        res.send([1, "codesByEvent"]);
+   // })
+})
+
 app.get("/api/read/codesByEvent/:evt", (req, res) => {
     const evt = req.params[0]
     const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
@@ -49,6 +59,17 @@ app.get("/api/read/codesByEvent/:evt", (req, res) => {
     })
 })
 
+app.get("/api/read/peopleByCodes/", (req, res) => {
+   // const cd = req.params[0]
+    //const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id WHERE ticketCode=?;"
+    //db.query(sqlSelect, [cd], (err, result) => { 
+       // if(err){
+        //    throw err;
+        //}
+        res.send([1, "result"]);
+   // })
+})
+
 app.get("/api/read/peopleByCodes/:code", (req, res) => {
     const cd = req.params[0]
     const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id WHERE ticketCode=?;"
@@ -56,7 +77,7 @@ app.get("/api/read/peopleByCodes/:code", (req, res) => {
         if(err){
             throw err;
         }
-        res.send(result);
+        res.send("result");
     })
 })
 

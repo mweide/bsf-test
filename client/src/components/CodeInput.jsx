@@ -1,27 +1,34 @@
 import React from "react"
 import { useState, useRef, useEffect } from "react"
 import axios from "axios"
+import Input from '@mui/material/Input';
 
 const CodeInput = (props) => {
 
-    
+    /**
+     * 
+     * {results.map((val, k) => {
+              return (<div key={k}>
+                <div>{val.first_name}, {val.last_name}, {val.email_address}, {val.ticketCode}</div></div>)})
+          }
+     */
     const [columns, setColumns] = useState([])
     const [results, setResults] = useState([])
     const [tab, setTable] = useState(false)
+    let email_address
+    let ticketCode
 
-    useEffect(() => {
-      axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${ref1.current.value}`).then((response) => {
+    useEffect(() => {axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${ref1.current.value}`).then((response) => {
         setResults(response.data)
-      })
-  }, [])
+      })}, [])
 
     const ref1 = useRef(null)
 
-    const mappedResults = () =>{
+    /*const mappedResults = () =>{
         results.map((val, k) => {
             return (<div key={k}>
               <div>{val.first_name}, {val.last_name}, {val.email_address}, {val.ticketCode}</div></div>)})
-    }
+    }*/
 
     function refreshPage() {
         window.location.reload(false);
@@ -51,6 +58,17 @@ const CodeInput = (props) => {
         setColumns(["First Name", "Last Name", "Email Address", "Ticket Code"])
     }
 
+    function getObjectByValue(objVal) {
+      let objectWithValue = {}
+      results.forEach(entry => {
+        if (Object.values(entry).indexOf(objVal) > -1) { // email value is inside obj inside array
+          console.log('entry', entry)
+          objectWithValue = entry
+        }
+      })
+      return objectWithValue
+    }
+
     return(
         <div>
         <div id="code-input">
@@ -62,13 +80,16 @@ const CodeInput = (props) => {
               search(code);
             }
           }}>Search</button>
+          {code}
         </div>
-        <div>
-          {()=> {if(results !== []) {
-            results.map((val, k) => {
-              return (<div key={k}>
-                <div>{val.first_name}, {val.last_name}, {val.email_address}, {val.ticketCode}</div></div>)})
-          }}}
+        <div className="userData">
+          {() => {
+            const index1 = results.indexOf(email_address);
+            const index2 = results.indexOf(ticketCode);
+            const val1 = getObjectByValue(email_address); 
+            const val2 = getObjectByValue(ticketCode); 
+            return({val1, val2})}}
+          
         </div>
         </div>
     )
