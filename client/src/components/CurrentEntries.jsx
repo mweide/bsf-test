@@ -7,13 +7,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button'
+import Input from '@mui/material/Input';
+
 
 const CurrentEntries = () => {
 
   const SECRET = process.env.REACT_APP_PASSCODE
 
   const [entryList, setEntryList] = useState([])
-  const [isEditing, setIsEditing] = useState(true)
+  let [disabled, setDisabled] = useState(true)
 
    //READ (GET)
   useEffect(() => {
@@ -79,19 +81,23 @@ const CurrentEntries = () => {
     const submitEmailsButton = document.getElementById('submitEmailsButton')
 
     if (passcode === SECRET) {
-      for (let i = 0; i < collection.length; i++)
+      for (let i = 0; i < collection.length; i++){
         collection[i].style.display = 'table-cell'
+      }
       doneButton.style.display = 'inline'
       editButton.style.display = 'none'
       editPasscodeInput.style.visibility = 'hidden'
       submitEmailsButton.style.display = 'block'
+      setDisabled(false)
 
     } else {
-      for (let i = 0; i < collection.length; i++)
+      for (let i = 0; i < collection.length; i++){
         collection[i].style.display = 'none'
+      }
       doneButton.style.display = 'none'
       editButton.style.display = 'inline'
       editPasscodeInput.style.visibility = 'visible'
+      setDisabled(true)
       editPasscodeInput.focus()
     }
     setPasscode('')
@@ -104,14 +110,17 @@ const CurrentEntries = () => {
     const doneButton = document.getElementById('doneButton')
     const collection = document.getElementsByClassName("editing")
     const submitEmailsButton = document.getElementById('submitEmailsButton')
+    const volEmail = document.getElementsByClassName('email')
 
-    for (let i = 0; i < collection.length; i++)
+    for (let i = 0; i < collection.length; i++){
       collection[i].style.display = 'none'
+    }
     editPasscodeInput.style.visibility = 'hidden'
     doneButton.style.display = 'none'
     editButton.style.display = 'inline'
     editButton.innerHTML = "Edit List"
     submitEmailsButton.style.display = 'none'
+    setDisabled(true)
   }
 
   function checkPasscode(e) {
@@ -157,7 +166,14 @@ const CurrentEntries = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="left">{val.first_name}</TableCell>
               <TableCell align="left">{val.last_name}</TableCell>
-              <TableCell align="right">{val.email_address}</TableCell>
+              <TableCell align="right">
+                <Input
+                  fullWidth={true}
+                  disabled={disabled}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="email"
+                  defaultValue={val.email_address}
+                  /></TableCell>
               <TableCell align="right" className='editing' sx={{display: 'none', alignContent: 'right',}}>
               <div className='centered'>
               <Button align="right" m={'auto'} className="update editing" sx={{display: 'none',}} variant="text" onClick={() => {
@@ -179,15 +195,14 @@ const CurrentEntries = () => {
 
       <div className='userData'>
         <div className="editField editGui">
-          <Button id="editButton" onClick={handleEditList}>Edit List</Button>
-          <Button id="doneButton" onClick={handleFinishedEditing}>Finished Editing</Button>
+          <Button id="editButton" variant="contained" onClick={handleEditList} sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }}>Edit List</Button>
+          <Button id="doneButton" variant="contained" onClick={handleFinishedEditing} sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }}>Finished Editing</Button>
           <br/>
-          <input id="editPasscodeInput" ref={refPass} type="password"
+          <Input id="editPasscodeInput" ref={refPass} type="password"
             placeholder='Enter passcode' onChange={checkPasscode}
             onBlur={(e) => abortPasscodeAttempt(e.target.value)} />
         </div>
-        <button id="submitEmailsButton" className='submitBtn' onClick={() => alert('TODO: Send It!')}>Email Vouchers</button>
-
+        <Button id="submitEmailsButton" className='submitBtn' variant="contained" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }} onClick={() => alert('TODO: Send It!')}>Email Vouchers</Button>
       </div>
     </div>
   )

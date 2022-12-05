@@ -79,7 +79,7 @@ const CodeInput = (props) => {
         <div id="code-input">
             <TextField
               sx={{
-                width: .98, 
+                width: .33, 
                 justifySelf: "center"
               }}
               id="codeInput"
@@ -87,7 +87,8 @@ const CodeInput = (props) => {
               ref={ref1}
               onChange={e => setCode(e.target.value)}
             />
-            <Button id="search-button" onClick={() => {checkLen()}}>Search</Button>
+            <br/>
+            <Button id="search-button" variant="contained" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }} onClick={() => {checkLen()}}>Search</Button>
         </div>
         </div>
     )

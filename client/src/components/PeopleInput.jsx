@@ -2,6 +2,7 @@ import React from "react"
 import { useState, useRef, useEffect } from "react"
 import axios from "axios"
 import Table from "./Table"
+import Button from '@mui/material/Button'
 
 const PeopleInput = () => {
 
@@ -53,11 +54,12 @@ const PeopleInput = () => {
             <label htmlFor="lastName">Last Name: </label>
                 <input ref={ref2} type="text" name="lastName" id="lastName" onInput={e => setLinput(e.target.value)}></input>
             <div>
-                <button id="search-button" onClick={() => {
+              <br/>
+                <Button id="search-button" variant="contained" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }} onClick={() => {
             if (fInput.length > 0 && lInput.length > 0) {
               search();
             }
-          }}>Search</button>
+          }}>Search</Button>
             </div>
             <div>
                 {() => {if (results!== []) {

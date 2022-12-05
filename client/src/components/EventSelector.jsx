@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Select from "react-select"
 import axios from "axios"
 import { ReactDOM } from "react"
+import Button from '@mui/material/Button'
 
 const EventSelector = (props) => {
     const [selectedEvent, setSelectedEvent] = useState('default')
@@ -98,11 +99,12 @@ const EventSelector = (props) => {
                 onChange={e=> {setSelectedEvent(e.value)}} />
             </form>
             <div>
-            <button id="search-button" onClick={() => {
+                <br/>
+            <Button id="search-button" variant="contained" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }} onClick={() => {
             if (selectedEvent.length > 0) {
               search(); mappedResults()
             }
-          }}>Search</button>
+          }}>Search</Button>
             </div>
             <div id="table">
             </div>

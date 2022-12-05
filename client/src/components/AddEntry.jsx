@@ -93,13 +93,13 @@ const AddEntry = () => {
         </Stack>
         </Box>
         <div className='centered'>
-        <Button className="submitBtn" variant="contained" size="large"
+        <Button className="submitBtn" variant="contained" size="large" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }}
           onClick={() => {
             if (firstName.length > 0 && lastName.length > 0 && emailAddress.length > 0) {
               submitEntry(); refreshPage();
             }
           }}
-        >Sign In</Button>
+        >Check In</Button>
         </div>
        
     </div>
