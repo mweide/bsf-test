@@ -1,7 +1,6 @@
-import React, {createContext, useState, useEffect} from 'react'
+import React, {createContext, useState } from 'react'
 import Select from 'react-select'
 import SetInputs from './SetInputs'
-import axios from 'axios'
 
 export const valToExport = createContext()
 

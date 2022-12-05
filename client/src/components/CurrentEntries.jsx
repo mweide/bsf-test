@@ -110,7 +110,6 @@ const CurrentEntries = () => {
     const doneButton = document.getElementById('doneButton')
     const collection = document.getElementsByClassName("editing")
     const submitEmailsButton = document.getElementById('submitEmailsButton')
-    const volEmail = document.getElementsByClassName('email')
 
     for (let i = 0; i < collection.length; i++){
       collection[i].style.display = 'none'
@@ -209,61 +208,3 @@ const CurrentEntries = () => {
 }
 
 export default CurrentEntries;
-
-/**
- * <TableContainer>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right">Email Address</TableCell>
-            <TableCell align="right">Edit</TableCell>
-            <TableCell align="right">Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {entryList.map((val, k) => {
-            <TableRow
-              key={k}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            
-
-        }
-            >
-              <TableCell align="right">{val.first_name}</TableCell>
-              <TableCell align="right">{val.last_name}</TableCell>
-              <TableCell align="right">{val.email_address}</TableCell>
-              <TableCell align="right" className="editControls editGui">
-              <Button className="delete" variant="text" onClick={() => {
-                deleteEntry(val.email_address)
-              }}>Delete</Button>
-              </TableCell>
-              <TableCell align="right" className="editControls editGui">
-              <Button className="update" variant="text" onClick={() => {
-                if (newEmail.length > 0) {
-                  updateEmail(val.email_address);
-                }
-              }}>Update</Button>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
-
-
-    <div className="editControls editGui">
-              <button className='delete' onClick={() => {
-                deleteEntry(val.email_address)
-              }}>delete</button>
-              <button className='update' onClick={() => {
-                if (newEmail.length > 0) {
-                  updateEmail(val.email_address);
-                }
-              }}>update</button>
-              <input type="email" className="updateInput" placeholder={val.email_address}
-                onChange={(e) => setNewEmail(e.target.value)} />
-            </div>
-          </div>)
- */

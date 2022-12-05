@@ -2,7 +2,6 @@ import React from "react"
 import { useState, useEffect } from "react"
 import Select from "react-select"
 import axios from "axios"
-import { ReactDOM } from "react"
 import Button from '@mui/material/Button'
 
 const EventSelector = (props) => {
@@ -13,10 +12,6 @@ const EventSelector = (props) => {
     const [results1, setResults1] = useState([])
     const [results2, setResults2] = useState([])
     const [columns, setColumns] = useState([])
-
-    function refreshPage() {
-        window.location.reload(false);
-    }
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByEvent/${selectedEvent}`).then((response) => {

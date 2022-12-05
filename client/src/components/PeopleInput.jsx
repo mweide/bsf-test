@@ -1,7 +1,6 @@
 import React from "react"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import axios from "axios"
-import Table from "./Table"
 import Button from '@mui/material/Button'
 
 const PeopleInput = () => {
@@ -10,13 +9,6 @@ const PeopleInput = () => {
     const [lInput, setLinput] = useState('')
     const [results, setResults] = useState([])
     const [columns, setColumns] = useState([])
-
-    const mappedResults = () =>{
-        results.map((val, k) => {
-            return (<div key={k}>
-              <div>{val.ticketCode}, {val.first_name}, {val.last_name}</div></div>)})
-    }
-
 
     const search = () => {
         axios.get(`${process.env.REACT_APP_HOST}/api/read/codesByPeople/${fInput}/${lInput}`).then((response) => {
@@ -39,10 +31,6 @@ const PeopleInput = () => {
             })
         setColumns(["Ticket Code", "First Name", "Last Name"])
     }
-
-    function refreshPage() {
-        window.location.reload(false);
-      }
 
     const ref1 = useRef(null)
     const ref2 = useRef(null)
