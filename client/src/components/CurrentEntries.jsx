@@ -1,12 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button'
 
 const CurrentEntries = () => {
 
   const SECRET = process.env.REACT_APP_PASSCODE
 
   const [entryList, setEntryList] = useState([])
-
+  const [isEditing, setIsEditing] = useState(true)
 
    //READ (GET)
   useEffect(() => {
@@ -65,7 +72,7 @@ const CurrentEntries = () => {
   const refPass = useRef(null);
 
   function handleEditList(e) {
-    const collection = document.getElementsByClassName("editControls")
+    const collection = document.getElementsByClassName("editing")
     const editButton = document.getElementById('editButton')
     const doneButton = document.getElementById('doneButton')
     const editPasscodeInput = document.getElementById('editPasscodeInput')
@@ -73,7 +80,7 @@ const CurrentEntries = () => {
 
     if (passcode === SECRET) {
       for (let i = 0; i < collection.length; i++)
-        collection[i].style.display = 'block'
+        collection[i].style.display = 'table-cell'
       doneButton.style.display = 'inline'
       editButton.style.display = 'none'
       editPasscodeInput.style.visibility = 'hidden'
@@ -95,7 +102,7 @@ const CurrentEntries = () => {
     const editPasscodeInput = document.getElementById('editPasscodeInput')
     const editButton = document.getElementById('editButton')
     const doneButton = document.getElementById('doneButton')
-    const collection = document.getElementsByClassName("editControls")
+    const collection = document.getElementsByClassName("editing")
     const submitEmailsButton = document.getElementById('submitEmailsButton')
 
     for (let i = 0; i < collection.length; i++)
@@ -131,32 +138,50 @@ const CurrentEntries = () => {
   return (
 
     <div className="currentEntries posRel">
-      <h2>Current Entries</h2>
-
-      <div className='userData'>
-        {entryList.map((val, k) => {
-          return (<div key={k}>
-            <div>{val.last_name}, {val.first_name} <span className="emailListed">{val.email_address}</span> </div>
-
-            <div className="editControls editGui">
-              <button className='delete' onClick={() => {
-
-                deleteEntry(val.email_address)
-              }}>delete</button>
-              <button className='update' onClick={() => {
+<h2>Current Entries</h2>
+<TableContainer>
+      <Table sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">First Name</TableCell>
+            <TableCell align="left">Last Name</TableCell>
+            <TableCell align="right">Email Address</TableCell>
+            <TableCell align="center" className='editing' sx={{display: 'none',}}>Edit</TableCell>
+            <TableCell align="center" className='editing' sx={{display: 'none'}}>Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {entryList.map((val, k) => (
+            <TableRow
+              key={k}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align="left">{val.first_name}</TableCell>
+              <TableCell align="left">{val.last_name}</TableCell>
+              <TableCell align="right">{val.email_address}</TableCell>
+              <TableCell align="right" className='editing' sx={{display: 'none', alignContent: 'right',}}>
+              <div className='centered'>
+              <Button align="right" m={'auto'} className="update editing" sx={{display: 'none',}} variant="text" onClick={() => {
                 if (newEmail.length > 0) {
                   updateEmail(val.email_address);
                 }
-              }}>update</button>
-              <input type="email" className="updateInput" placeholder={val.email_address}
-                onChange={(e) => setNewEmail(e.target.value)} />
-            </div>
-          </div>)
+              }}>Update</Button></div></TableCell>
+              <TableCell align="right" className='editing' sx={{display: 'none', alignContent: 'right',}}>
+              <div className='centered'>
+              <Button align="right" m={'auto'} className="delete editing" sx={{display: 'none', color:"red",}} variant="text" onClick={() => {
+                deleteEntry(val.email_address)
+              }}>Delete</Button>
+              </div></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
 
-        })}
+      <div className='userData'>
         <div className="editField editGui">
-          <button id="editButton" onClick={handleEditList}>Edit List</button>
-          <button id="doneButton" onClick={handleFinishedEditing}>Finished Editing</button>
+          <Button id="editButton" onClick={handleEditList}>Edit List</Button>
+          <Button id="doneButton" onClick={handleFinishedEditing}>Finished Editing</Button>
+          <br/>
           <input id="editPasscodeInput" ref={refPass} type="password"
             placeholder='Enter passcode' onChange={checkPasscode}
             onBlur={(e) => abortPasscodeAttempt(e.target.value)} />
@@ -169,3 +194,61 @@ const CurrentEntries = () => {
 }
 
 export default CurrentEntries;
+
+/**
+ * <TableContainer>
+      <Table sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell align="right">First Name</TableCell>
+            <TableCell align="right">Last Name</TableCell>
+            <TableCell align="right">Email Address</TableCell>
+            <TableCell align="right">Edit</TableCell>
+            <TableCell align="right">Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {entryList.map((val, k) => {
+            <TableRow
+              key={k}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            
+
+        }
+            >
+              <TableCell align="right">{val.first_name}</TableCell>
+              <TableCell align="right">{val.last_name}</TableCell>
+              <TableCell align="right">{val.email_address}</TableCell>
+              <TableCell align="right" className="editControls editGui">
+              <Button className="delete" variant="text" onClick={() => {
+                deleteEntry(val.email_address)
+              }}>Delete</Button>
+              </TableCell>
+              <TableCell align="right" className="editControls editGui">
+              <Button className="update" variant="text" onClick={() => {
+                if (newEmail.length > 0) {
+                  updateEmail(val.email_address);
+                }
+              }}>Update</Button>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+
+
+    <div className="editControls editGui">
+              <button className='delete' onClick={() => {
+                deleteEntry(val.email_address)
+              }}>delete</button>
+              <button className='update' onClick={() => {
+                if (newEmail.length > 0) {
+                  updateEmail(val.email_address);
+                }
+              }}>update</button>
+              <input type="email" className="updateInput" placeholder={val.email_address}
+                onChange={(e) => setNewEmail(e.target.value)} />
+            </div>
+          </div>)
+ */

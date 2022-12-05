@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
 import axios from 'axios'
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const AddEntry = () => {
 
@@ -34,8 +36,114 @@ const AddEntry = () => {
   }
 
   return (
-    <div className="addEntry">
-      <h2>Add an Entry</h2>
+    <div>
+      <Box
+      component="form"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '60ch' },
+      }}
+      noValidate
+      autoComplete="off"
+      margin={"auto"}
+    >
+      <Stack spacing={2}
+      justifyContent={"center"}
+      alignItems={"center"}
+      alignContent={"center"}
+      justifyItems={"center"}>
+        <span>
+  <div className='centered'>
+  <TextField
+          fullWidth
+          sx={{
+            width: .98, 
+            justifySelf: "center"
+          }}
+          id="firstName"
+          label="First Name"
+          ref={ref1}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+  </div>
+
+        </span>
+       <span>
+
+  <div className='centered'>
+  <TextField
+          fullWidth
+          id="lastName"
+          label="Last Name"
+          ref={ref2}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+</div></span>
+        <span>
+  <div className='centered'>
+<TextField
+          fullWidth
+          id="email"
+          label="Email Address"
+          ref={ref3}
+          onChange={(e) => setEmailAddress(e.target.value)}
+        />
+</div></span>
+        </Stack>
+        </Box>
+        <div className='centered'>
+        <Button className="submitBtn" variant="contained" size="large"
+          onClick={() => {
+            if (firstName.length > 0 && lastName.length > 0 && emailAddress.length > 0) {
+              submitEntry(); refreshPage();
+            }
+          }}
+        >Sign In</Button>
+        </div>
+       
+    </div>
+  )
+}
+
+export default AddEntry;
+
+/**
+ * 
+ * 
+ * <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id="outlined"
+          label="First Name"
+          ref={ref1}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <TextField
+          id="outlined"
+          label="Last Name"
+          ref={ref2}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <TextField
+          id="outlined"
+          label="Email Address"
+          ref={ref3}
+          onChange={(e) => setEmailAddress(e.target.value)}
+        />
+        </div>
+    </Box>
+
+
+    -------------
+          <h2>Add an Entry</h2>
       <div id='userInput'>
         <div>
           <label htmlFor="firstName">First Name</label>
@@ -57,171 +165,4 @@ const AddEntry = () => {
           }}
         >Add Entry</button>
       </div>
-    </div>
-  )
-}
-
-export default AddEntry;
-
-/**
- * <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Hello World"
-        />
-        <TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue="Hello World"
-        />
-        <TextField
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
-        <TextField
-          id="outlined-read-only-input"
-          label="Read Only"
-          defaultValue="Hello World"
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          id="outlined-number"
-          label="Number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField id="outlined-search" label="Search field" type="search" />
-        <TextField
-          id="outlined-helperText"
-          label="Helper text"
-          defaultValue="Default Value"
-          helperText="Some important text"
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          id="filled-required"
-          label="Required"
-          defaultValue="Hello World"
-          variant="filled"
-        />
-        <TextField
-          disabled
-          id="filled-disabled"
-          label="Disabled"
-          defaultValue="Hello World"
-          variant="filled"
-        />
-        <TextField
-          id="filled-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="filled"
-        />
-        <TextField
-          id="filled-read-only-input"
-          label="Read Only"
-          defaultValue="Hello World"
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-        />
-        <TextField
-          id="filled-number"
-          label="Number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="filled"
-        />
-        <TextField
-          id="filled-search"
-          label="Search field"
-          type="search"
-          variant="filled"
-        />
-        <TextField
-          id="filled-helperText"
-          label="Helper text"
-          defaultValue="Default Value"
-          helperText="Some important text"
-          variant="filled"
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          id="standard-required"
-          label="Required"
-          defaultValue="Hello World"
-          variant="standard"
-        />
-        <TextField
-          disabled
-          id="standard-disabled"
-          label="Disabled"
-          defaultValue="Hello World"
-          variant="standard"
-        />
-        <TextField
-          id="standard-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="standard"
-        />
-        <TextField
-          id="standard-read-only-input"
-          label="Read Only"
-          defaultValue="Hello World"
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="standard"
-        />
-        <TextField
-          id="standard-number"
-          label="Number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="standard"
-        />
-        <TextField
-          id="standard-search"
-          label="Search field"
-          type="search"
-          variant="standard"
-        />
-        <TextField
-          id="standard-helperText"
-          label="Helper text"
-          defaultValue="Default Value"
-          helperText="Some important text"
-          variant="standard"
-        />
-      </div>
-    </Box>
  */

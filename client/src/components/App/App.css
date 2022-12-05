@@ -1,8 +1,39 @@
 body {
   margin:0 10px;
-  
+
 }
-.App {
+span {
+  width: 100%;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+#doneButton{
+  display: none;
+}
+#editPasscodeInput{
+  visibility: hidden;
+}
+#submitEmailsButton{
+  display: none;
+}
+.editControls{
+  display: none;
+}
+.clear {
+  clear:both;
+}
+.centered {
+  /*height: 100vh; /* Magic here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.editing{
+  display: none;
+}
+/* .App {
   font-family: Arial, Helvetica, sans-serif;
   max-width:600px;
   margin: auto;
@@ -81,4 +112,4 @@ body {
 }
 #submitEmailsButton{
   display: none;
-}
+} */

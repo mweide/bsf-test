@@ -13,13 +13,13 @@ function App() {
   return (
     <div>
     <div className="App">
-      <h1>Entries</h1>
+      <h1 className='centered'>Welcome</h1>
 
       <AddEntry />
       <hr />
       <CurrentEntries />
       <hr />
-      <h1>Search</h1>
+      <h2>Search</h2>
       <Selector/>
       
       <hr />

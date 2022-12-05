@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // READ
 app.get("/api/read", (req, res) => {
+    console.log(req)
     const sqlSelect = "SELECT * FROM volunteers;"
     db.query(sqlSelect, (err, result) => { 
         if(err){
@@ -39,19 +40,19 @@ app.get("/api/read/events", (req, res) => {
 })
 
 app.get("/api/read/codesByEvent/", (req, res) => {
-    //const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
-    //db.query(sqlSelect, [evt], (err, result) => { 
-        //if(err){
-          //  throw err;
-        //}
-        res.send([1, "codesByEvent"]);
-   // })
+    const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
+    db.query(sqlSelect, (err, result) => { //[evt], (err, result) => { 
+        if(err){
+          throw err;
+        }
+        res.send(result);
+    })
 })
 
 app.get("/api/read/codesByEvent/:evt", (req, res) => {
-    const evt = req.params[0]
+    const evtt = req.params.evt
     const sqlSelect = "SELECT event_name, event_date, ticketCode FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE event_name=?;"
-    db.query(sqlSelect, [evt], (err, result) => { 
+    db.query(sqlSelect, [evtt], (err, result) => { 
         if(err){
             throw err;
         }
@@ -60,14 +61,14 @@ app.get("/api/read/codesByEvent/:evt", (req, res) => {
 })
 
 app.get("/api/read/peopleByCodes/", (req, res) => {
-   // const cd = req.params[0]
-    //const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id WHERE ticketCode=?;"
-    //db.query(sqlSelect, [cd], (err, result) => { 
-       // if(err){
-        //    throw err;
-        //}
-        res.send([1, "result"]);
-   // })
+    //const cd = req.params.cd
+    const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id;"
+    db.query(sqlSelect, [cd], (err, result) => { 
+        if(err){
+            throw err;
+        }
+        res.send(result);
+    })
 })
 
 app.get("/api/read/peopleByCodes/:code", (req, res) => {
@@ -77,13 +78,14 @@ app.get("/api/read/peopleByCodes/:code", (req, res) => {
         if(err){
             throw err;
         }
-        res.send("result");
+        res.send(result);
+        console.log(cd)
     })
 })
 
 app.get("/api/read/codesByPeople/:fn/:ln", (req, res) => {
-    const first = req.params[0]
-    const last = req.params[1]
+    const first = req.params.fn
+    const last = req.params.ln
     const sqlSelect = "SELECT ticketCode, first_name, last_name FROM volunteers JOIN tickets ON volunteers.volunteer_id=tickets.volunteer_id WHERE first_name=? and last_name=?;"
     db.query(sqlSelect, [first, last], (err, result) => { 
         if(err){
@@ -94,9 +96,9 @@ app.get("/api/read/codesByPeople/:fn/:ln", (req, res) => {
 })
 
 app.get("/api/read/peopleByEvents/:evt", (req, res) => {
-    const evt = req.params[0]
+    const evtt = req.params.evt
     const sqlSelect = "SELECT event_name, event_date, first_name, last_name FROM events JOIN volunteer_lists ON events.volunteer_list_id=volunteer_lists.volunteer_list_id JOIN volunteers ON volunteer_lists.volunteer_id=volunteers.volunteer_id WHERE event_name=?;"
-    db.query(sqlSelect, [evt], (err, result) => { 
+    db.query(sqlSelect, [evtt], (err, result) => { 
         if(err){
             throw err;
         }

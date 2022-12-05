@@ -1,7 +1,8 @@
 import React from "react"
 import { useState, useRef, useEffect } from "react"
 import axios from "axios"
-import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button'
 
 const CodeInput = (props) => {
 
@@ -15,8 +16,6 @@ const CodeInput = (props) => {
     const [columns, setColumns] = useState([])
     const [results, setResults] = useState([])
     const [tab, setTable] = useState(false)
-    let email_address
-    let ticketCode
 
     useEffect(() => {axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${ref1.current.value}`).then((response) => {
         setResults(response.data)
@@ -69,27 +68,26 @@ const CodeInput = (props) => {
       return objectWithValue
     }
 
+    const checkLen = () => {
+      if (code.length > 0) {
+        search(code);
+      }
+    }
+
     return(
         <div>
         <div id="code-input">
-            <label>
-                <input ref={ref1} name="codeInput" id="codeInput" type="text" onChange={e => setCode(e.target.value)}></input>
-            </label>
-            <button id="search-button" onClick={() => {
-            if (code.length > 0) {
-              search(code);
-            }
-          }}>Search</button>
-          {code}
-        </div>
-        <div className="userData">
-          {() => {
-            const index1 = results.indexOf(email_address);
-            const index2 = results.indexOf(ticketCode);
-            const val1 = getObjectByValue(email_address); 
-            const val2 = getObjectByValue(ticketCode); 
-            return({val1, val2})}}
-          
+            <TextField
+              sx={{
+                width: .98, 
+                justifySelf: "center"
+              }}
+              id="codeInput"
+              label="Code"
+              ref={ref1}
+              onChange={e => setCode(e.target.value)}
+            />
+            <Button id="search-button" onClick={() => {checkLen()}}>Search</Button>
         </div>
         </div>
     )
