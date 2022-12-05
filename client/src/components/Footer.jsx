@@ -17,7 +17,7 @@ const Footer = () => {
                 <li>Updated components/App/App.js to include the main component of our feature, the selector</li>
                 <li>Updated server/index.js with paths for searches to take to query the database</li>
             </ul>
-            <p>Github: <a href="https://github.com/dldf/BSF-starter">https://github.com/dldf/BSF-starter</a></p>
+            <p>Github: <a href="https://github.com/mweide/bsf-test">https://github.com/mweide/bsf-test</a></p>
         </div>
     )
 }
