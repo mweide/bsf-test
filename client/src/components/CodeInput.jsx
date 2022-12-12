@@ -9,7 +9,7 @@ const CodeInput = (props) => {
     const [columns, setColumns] = useState([])
     const [results, setResults] = useState([])
 
-    useEffect(() => {axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${ref1.current.value}`).then((response) => {
+    useEffect(() => {axios.get(`${process.env.REACT_APP_HOST}/api/read/peopleByCodes/${code}`).then((response) => {
         setResults(response.data)
       })}, [])
 
@@ -55,6 +55,7 @@ const CodeInput = (props) => {
             />
             <br/>
             <Button id="search-button" variant="contained" sx={{ textTransform: 'capitalize', borderRadius:0, color: "#b01b1f", borderColor: "#b01b1f", backgroundColor:"white", ':hover': {backgroundColor:"#b01b1f", color:"white"}, ':click': {backgroundColor:"#b01b1f", color:"white"} }} onClick={() => {checkLen()}}>Search</Button>
+            {code}
         </div>
         </div>
     )

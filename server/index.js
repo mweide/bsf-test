@@ -72,7 +72,7 @@ app.get("/api/read/peopleByCodes/", (req, res) => {
 })
 
 app.get("/api/read/peopleByCodes/:code", (req, res) => {
-    const cd = req.params[0]
+    const cd = req.params.code
     const sqlSelect = "SELECT first_name, last_name, email_address, ticketCode FROM tickets JOIN volunteers ON tickets.volunteer_id=volunteers.volunteer_id WHERE ticketCode=?;"
     db.query(sqlSelect, [cd], (err, result) => { 
         if(err){
